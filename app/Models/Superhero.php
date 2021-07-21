@@ -15,7 +15,8 @@ class Superhero extends Model
         'real_name',
         'origin_description',
         'superpowers',
-        'catch_phrase'
+        'catch_phrase',
+        'file_name'
     ];
 
     use HasFactory;

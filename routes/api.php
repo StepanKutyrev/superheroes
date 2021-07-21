@@ -15,6 +15,5 @@ use App\Http\Controllers\SuperheroController;
 |
 */
 
-Route::apiResource('/superhero', 'SuperheroController');
 
 

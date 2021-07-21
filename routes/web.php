@@ -16,9 +16,4 @@ use App\Http\Controllers\SuperheroController;
 
 
 
-Route::get('/', 'SuperheroController@index');
-Route::get('/superhero/{superhero}/edit', 'SuperheroController@edit');
-Route::put('/superhero/{superhero}', 'SuperheroController@update');
-Route::get('/superhero/create', 'SuperheroController@create');
-Route::post('/superhero', 'SuperheroController@store');
-Route::delete('/superhero/{superhero}', 'SuperheroController@destroy');
+Route::resource('/superhero', 'SuperheroController')->except('show');

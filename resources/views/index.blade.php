@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,6 +21,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nickname</th>
+                <th scope="col">Real_name</th>
                 <th scope="col">origin_description</th>
                 <th scope="col">superpowers</th>
                 <th scope="col">catch_phrase</th>
@@ -39,18 +33,22 @@
                 <tr>
                     <th scope="row">{{ $superhero->id }}</th>
                    <td>{{ $superhero->nickname }}</td>
+                    <td>{{ $superhero->real_name }}</td>
                     <td>{{ $superhero->origin_description }}</td>
                     <td>{{ $superhero->superpowers }}</td>
                     <td>{{ $superhero->catch_phrase }}</td>
+                    <td>
+                        <img alt="image" src="{{asset('storage/superheroes/' . $superhero->file_name)}}"/>
+                    </td>
                     <td>
                         <form action="/superhero/{{ $superhero->id }}/edit">
                             <input class="btn btn-primary btn-sm" type="submit" value="edit" />
                         </form> </td>
                     </tr>
+
             @endforeach
             </tbody>
         </table>
-
     </div>
 </div>
 </body>

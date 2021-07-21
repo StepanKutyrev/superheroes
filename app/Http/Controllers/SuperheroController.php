@@ -2,76 +2,78 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Superhero;
-use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 
 class SuperheroController extends Controller
 {
-//    public function show($id)
-//    {
-//        $superhero = Superhero::findOrFail($id);
-//        return new SuperheroResource($superhero);
-//    }
 
     public function index()
     {
+        $superheroes = Superhero::paginate(100);
 
-       $superheroes =Superhero::paginate(5);
-       return view ('index' , ['superheroes' => $superheroes]);
+        return view('index', ['superheroes' => $superheroes]);
     }
 
-    public function edit( Superhero $superhero )
+    public function edit(Superhero $superhero)
     {
-        return view('edit' , ['superhero' => $superhero]);
+        return view('edit', ['superhero' => $superhero]);
     }
 
-    public function update(Superhero $superhero )
+    public function update(Superhero $superhero)
     {
-        request()->validate([
-            'nickname'=>'required',
-            'origin_description'=>'required',
-            'superpowers'=>'required',
-            'catch_phrase'=>'required',
-        ]);
-        $superhero->update([
-            'nickname'=>request('nickname'),
-            'origin_description'=>request('origin_description'),
-            'superpowers'=>request('superpowers'),
-            'catch_phrase'=>request('catch_phrase'),
-         ]);
-      return redirect('/');
+        $this->validateForm();
+        $superhero->update(request()->all());
+        return redirect()->back();
     }
 
-    public function create(){
-        return view ('create');
+    public function create()
+    {
+        return view('create');
     }
 
-    public function store(Request $request){
-        request()->validate([
-            'nickname'=>'required',
-            'origin_description'=>'required',
-            'superpowers'=>'required',
-            'catch_phrase'=>'required',
-        ]);
+    public function store()
+    {
+        $this->validateForm();
+
+        /** @var UploadedFile $file */
+        $file     = request('image');
+        $fileName = time() . '.' . File::extension($file->getClientOriginalName());
+
+        $file->storeAs('/public/superheroes', $fileName);
 
         Superhero::create([
-            'nickname'=>request('nickname'),
-            'origin_description'=>request('origin_description'),
-            'superpowers'=>request('superpowers'),
-            'catch_phrase'=>request('catch_phrase'),
+            'nickname'           => request('nickname'),
+            'origin_description' => request('origin_description'),
+            'superpowers'        => request('superpowers'),
+            'catch_phrase'       => request('catch_phrase'),
+            'real_name'          => request('real_name'),
+            'file_name'          => $fileName,
         ]);
-        dd($request->file());
-        return redirect('/post');
-    }
 
+        return redirect()->route('superhero.index');
+    }
 
 
     public function destroy(Superhero $superhero)
     {
-        $superhero ->delete();
-        return redirect('/');
+        dd('22');
+        $superhero->delete();
 
+        return redirect()->route('superhero.index');
+    }
+
+    private function validateForm()
+    {
+        request()->validate([
+            'nickname'           => 'required',
+            'origin_description' => 'required',
+            'superpowers'        => 'required',
+            'catch_phrase'       => 'required',
+            'real_name'          => 'required',
+            'image'              => 'required|image|mimes:jpg,png,jpeg|max:2000048',
+        ]);
     }
 }
 
