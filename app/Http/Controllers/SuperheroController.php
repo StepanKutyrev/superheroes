@@ -24,8 +24,23 @@ class SuperheroController extends Controller
     public function update(Superhero $superhero)
     {
         $this->validateForm();
-        $superhero->update(request()->all());
-        return redirect()->back();
+
+        /** @var UploadedFile $file */
+        $file     = request('image');
+        $fileName = time() . '.' . File::extension($file->getClientOriginalName());
+
+        $file->storeAs('/public/superheroes', $fileName);
+
+        $superhero->update([
+            'nickname'           => request('nickname'),
+            'origin_description' => request('origin_description'),
+            'superpowers'        => request('superpowers'),
+            'catch_phrase'       => request('catch_phrase'),
+            'real_name'          => request('real_name'),
+            'file_name'          => $fileName,
+        ]);
+
+        return redirect()->route('superhero.index');
     }
 
     public function create()
@@ -60,7 +75,6 @@ class SuperheroController extends Controller
     {
         dd('22');
         $superhero->delete();
-
         return redirect()->route('superhero.index');
     }
 

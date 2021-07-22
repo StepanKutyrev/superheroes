@@ -25,6 +25,7 @@
                 <th scope="col">origin_description</th>
                 <th scope="col">superpowers</th>
                 <th scope="col">catch_phrase</th>
+                <th scope="col">image</th>
                 <th scope="col">actions</th>
             </tr>
             </thead>
@@ -38,7 +39,7 @@
                     <td>{{ $superhero->superpowers }}</td>
                     <td>{{ $superhero->catch_phrase }}</td>
                     <td>
-                        <img alt="image" src="{{asset('storage/superheroes/' . $superhero->file_name)}}"/>
+                        <img style="max-width: 50px; max-height: 50px;" alt="image" src="{{asset('storage/superheroes/' . $superhero->file_name)}}"/>
                     </td>
                     <td>
                         <form action="/superhero/{{ $superhero->id }}/edit">

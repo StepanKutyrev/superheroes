@@ -18,13 +18,25 @@
         @csrf
 
         <label for="nickname">Nickname</label>
-        <input type="text" class="form-control mt-2" id="nickname" value="{{$superhero->nickname}}">
-        <label class="mt-2" for="origin_description">Origin description</label>
-        <input type="text" class="form-control mt-2" id="nickname" value="{{$superhero->origin_description}}">
+        <input type="text" class="form-control mt-2" id="nickname" value="{{$superhero->nickname}}" required>
+        <label class="mt-2" for="origin_description">Real name</label>
+        <input type="text" class="form-control mt-2" id="real_name" name="real_name"  value="{{$superhero->origin_description}}" required>
+        <label class="mt-2" for="real_name">Origin description</label>
+        <input type="text" class="form-control mt-2" id="origin_description" name="origin_description"  value="{{$superhero->origin_description}}" required>
         <label class="mt-2" for="superpowers">Superpowers</label>
-        <input type="text" class="form-control mt-2" id="nickname" value="{{$superhero->superpowers}}">
+        <input type="text" class="form-control mt-2" id="superpowers" name="superpowers"  value="{{$superhero->superpowers}}" required>
         <label class="mt-2" for="catch_phrase">Catch phrase</label>
-        <input type="text" class="form-control mt-2" id="nickname" value="{{$superhero->catch_phrase}}">
+        <input type="text" class="form-control mt-2" id="catch_phrase" name="catch_phrase"  value="{{$superhero->catch_phrase}}" required>
+        <div class="input-group mt-2">
+            <div class="custom-file">
+                <input type="file"
+                       class="custom-file-input"
+                       name="image"
+                       required
+                       accept="image/png, image/jpg, image/jpeg"
+                >
+            </div>
+        </div>
         <button class="btn btn-outline-primary  mt-2 ">Update</button>
     </form>
     <form method="POST" action="/superhero/{{ $superhero->id}}">
