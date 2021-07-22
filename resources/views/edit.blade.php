@@ -18,7 +18,7 @@
         @csrf
 
         <label for="nickname">Nickname</label>
-        <input type="text" class="form-control mt-2" id="nickname" value="{{$superhero->nickname}}" required>
+        <input type="text" class="form-control mt-2" id="nickname" name="nickname" value="{{$superhero->nickname}}" required>
         <label class="mt-2" for="origin_description">Real name</label>
         <input type="text" class="form-control mt-2" id="real_name" name="real_name"  value="{{$superhero->origin_description}}" required>
         <label class="mt-2" for="real_name">Origin description</label>
